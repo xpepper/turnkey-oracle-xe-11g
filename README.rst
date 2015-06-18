@@ -25,6 +25,7 @@ The high level steps are:
 Resources
 --------------------------------------------------
 
+- `Oracle XE Installation Guide` <http://docs.oracle.com/cd/E17781_01/install.112/e18802/toc.htm>`_
 - `Oracle Database 11g Express Edition <http://www.oracle.com/technetwork/products/express-edition/overview/index.html>`_
 - `Oracle Database Express Edition 11g Release 2 download page <http://www.oracle.com/technetwork/products/express-edition/downloads/index.html>`_
 - `Oracle Database Express Edition Installation Guide for Linux x86-64 <http://docs.oracle.com/cd/E17781_01/install.112/e18802/toc.htm>`_
@@ -93,9 +94,16 @@ Log in to the virtual machine as root and run the following commands:
 
 ::
 
-    /etc/init.d/oracle-xe configure responseFile=oracle.rsp >> oracle-install.log
+    /etc/init.d/oracle-xe configure >> oracle-install.log
 
 That's it ! Now Oracle is running:
+
+Add Oracle bin to your path
+
+::
+
+Add to the end of the .bashrc
+    export PATH=$ORACLE_HOME/bin:$PATH
 
 ::
 
@@ -127,3 +135,13 @@ Create an Oracle user account:
 
     root@turnkey-oracle-xe-11g ~# $ORACLE_HOME/bin/sqlplus sys/<PASSWORD> as
     sysdba @bin/mkorauser.sql <USERNAME> <PASSWORD>
+
+Enable remote access
+
+::
+
+    $ sqlplus system
+Enter password: SYSTEM_password
+
+At the SQL prompt, enter the following command:
+    SQL> EXEC DBMS_XDB.SETLISTENERLOCALACCESS(FALSE);
